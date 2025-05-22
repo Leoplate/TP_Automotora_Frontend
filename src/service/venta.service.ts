@@ -7,8 +7,12 @@ import { Observable } from 'rxjs';
 })
 export class VentaService {
 
-  readonly apiUrl = 'https://localhost:6026/api/venta/vehiculo';
+  readonly apiUrl = 'https://localhost:6026/api/venta/';
   readonly apiUrlvehiculo = 'https://localhost:6026/api/venta/vehiculo';
+  readonly apiUrlCliente = 'https://localhost:6026/api/cliente';
+  readonly apiUrlProducto = 'https://localhost:6026/api/producto';
+  
+  
   
   usuarios: any[];
   
@@ -19,27 +23,35 @@ export class VentaService {
 
 
 
-  getUsers() {
+  getVentas() {
     return this.http.get<any[]>(this.apiUrl);
   }
 
-  saveUsers(usuario: any) {
-    console.log(usuario)
-    return this.http.post<any>(this.apiUrl, usuario);
+  getClientes() {
+    return this.http.get<any[]>(this.apiUrlCliente);
+  }
+
+  getProducto() {
+    return this.http.get<any[]>(this.apiUrlProducto);
+  }
+
+  saveVentas(venta: any) {
+    console.log(venta)
+    return this.http.post<any>(this.apiUrl, venta);
   
   }
 
-  editUsers(usuario: any) {
+  editVentas(venta: any) {
     
-    var ruta = this.apiUrl+"/"+usuario.id;
-    return this.http.put<any>(ruta, usuario);
+    var ruta = this.apiUrl+venta.id;
+    return this.http.put<any>(ruta, venta);
   
   }
 
-  deleteUsers(id: any) {
+  deleteVentas(id: any) {
     
     
-    var ruta = this.apiUrl+"/"+id;
+    var ruta = this.apiUrl+id;
     
   console.log('URL de eliminación:', ruta); // Verifica la URL antes de la petición
   return this.http.delete<any>(ruta);
@@ -49,7 +61,7 @@ export class VentaService {
 getListadoVehiculo() {
     var ruta = this.apiUrlvehiculo;
     console.log(ruta);
-    return this.http.get<any[]>(this.apiUrl);
+    return this.http.get<any[]>(ruta);
 }
 
 

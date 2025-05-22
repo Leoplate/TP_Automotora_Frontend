@@ -2,16 +2,140 @@
 
 
 
-
-<h1>Vehículos más vendidos:</h1>
-
+<h1>Ventas</h1>
 
 
 
+
+
+<p>
+    <p-button (click)="showDialog()" label="+ Crear Venta" [raised]="true" severity="help" />
+    <a></a>
+    <p-button (click)="showDialogListado()" label="+ Vendidos" severity="info" />
+</p>
+
+
+<label for="nome" class="font-semibold w-24">Nombre: </label>
+<input id="nome" (input)="filtrarVentas()" [(ngModel)]="nombreFiltro" pInputText placeholder="Buscar por cliente">
 
 
 <p></p>
 <p-table [value]="ventasFiltradas" [paginator]="true" [rows]="6" [tableStyle]="{ 'min-width': '50rem' }">
+    
+    <ng-template #header>
+        <tr>
+            <th>ID</th>
+            <th>Cliente</th>
+            <th>Vehiculo</th>
+            <th>Fecha</th>
+            <th>Total</th>
+        </tr>
+    </ng-template>
+    
+    <ng-template #body let-venta>
+        <tr>
+            <td>{{ venta.id }}</td>
+            <td>{{ venta.clienteApellido }}</td>
+            <td>{{ venta.productoNombre }}</td>
+            <td>{{ venta.fecha }}</td>
+            <td>{{ venta.total }}</td>
+            <td>
+              <p-button (click)="showDialogEdit(venta)" icon="pi pi-pencil" [rounded]="true" severity="warn" [outlined]="true" />  
+              <p-button (click)="eliminarVentas(venta.id)" icon="pi pi-trash" [rounded]="true" severity="danger" [outlined]="true" />
+            </td>
+            
+        </tr>
+        
+    </ng-template>
+      
+    
+    
+</p-table>
+   
+
+
+
+<p-dialog header="Crear Venta" [modal]="true" [(visible)]="visible" [style]="{ width: '25rem' }">
+    <span class="p-text-secondary block mb-8"></span>
+    <div class="flex items-center gap-4 mb-4">
+        <label for="clienteId" class="font-semibold w-24">Cliente: </label>
+        <!--input pInputText id="name" class="flex-auto" [(ngModel)]="clienteId" autocomplete="off" /-->
+        <select [(ngModel)]="clienteId">
+        <option *ngFor="let venta of foraneos" [value]="venta.clienteId">
+             {{ venta.id }}  {{"/" + venta.apellido}}
+        </option>
+        </select>
+    
+    </div>
+    <div class="flex items-center gap-4 mb-4">
+        <label for="vehiculoId" class="font-semibold w-24">Vehiculo:</label>
+        <!--input pInputText id="price" class="flex-auto" [(ngModel)]="vehiculoId" autocomplete="off" /-->
+        <select [(ngModel)]="vehiculoId">
+        <option *ngFor="let venta of productos" [value]="venta.productoId">
+             {{ venta.id }}  {{"/" + venta.nombre}}
+        </option>
+        </select>
+    </div>
+    <div class="flex items-center gap-4 mb-4">
+        <label for="fecha" class="font-semibold w-24">Fecha:</label>
+        <input pInputText id="stock" class="flex-auto" [(ngModel)]="fecha" autocomplete="off" />
+    </div>
+    <div class="flex items-center gap-4 mb-4">
+        <label for="total" class="font-semibold w-24">Total:</label>
+        <input pInputText id="stock" class="flex-auto" [(ngModel)]="total" autocomplete="off" />
+    </div>
+    <div class="flex justify-end gap-2">
+        <p-button label="Cancel" severity="secondary" (click)="visible = false" />
+        <p-button label="Aceptar" (click)="crearVenta()" />
+    </div>
+</p-dialog>
+
+
+<p-dialog header="Modicar Venta" [modal]="true" [(visible)]="visibleEditar" [style]="{ width: '25rem' }">
+    <span class="p-text-secondary block mb-8"></span>
+    <div>
+        <label for="ventaId" class="font-semibold w-24">ID: </label>
+        <input pInputText id="ventaId" class="flex-auto" [(ngModel)]="id" readonly style="border: none; outline: none;" />
+    <p></p>
+    </div>
+    <div class="flex items-center gap-4 mb-4">  
+        <label for="clienteId" class="font-semibold w-24">Cliente: </label>
+        <!--input pInputText id="clienteId" class="flex-auto" [(ngModel)]="clienteId" autocomplete="off" /-->
+        <select [(ngModel)]="clienteId" >
+        <option *ngFor="let venta of foraneos" [value]="venta.id">
+             {{ venta.id }}  {{"/" + venta.apellido}}
+        </option>
+        </select>
+    </div>
+    <div class="flex items-center gap-4 mb-4">
+        <label for="vehiculoId" class="font-semibold w-24">Vehículo:</label>
+        <!--input pInputText id="vehiculoId" class="flex-auto" [(ngModel)]="vehiculoId" autocomplete="off" /-->
+        <select [(ngModel)]="vehiculoId" >
+        <option *ngFor="let venta of productos" [value]="venta.id">
+             {{ venta.id }}  {{"/" + venta.nombre}}
+        </option>
+        </select> 
+    </div>
+    <div class="flex items-center gap-4 mb-4">
+        <label for="fecha" class="font-semibold w-24">Fecha:</label>
+        <input pInputText id="total" class="flex-auto" [(ngModel)]="fecha" autocomplete="off" />
+    </div>
+    <div class="flex items-center gap-4 mb-4">
+        <label for="total" class="font-semibold w-24">Total:</label>
+        <input pInputText id="total" class="flex-auto" [(ngModel)]="total" autocomplete="off" />
+    </div>
+    
+    <div class="flex justify-end gap-2">
+        <p-button label="Cancel" severity="secondary" (click)="visibleEditar = false" />
+        <p-button label="Aceptar" (click)="editarVenta()" />
+    </div>
+</p-dialog>
+
+
+
+<p-dialog header="Vehículos más vendidos:" [modal]="true" [(visible)]="visibleListado" [style]="{ width: '50rem' }" [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" [maximizable]="true">
+    <p>
+        <p-table [value]="listadoVentas" [paginator]="true" [rows]="6" [tableStyle]="{ 'min-width': '50rem' }">
     
     <ng-template #header>
         <tr>
@@ -32,12 +156,5 @@
     
 </p-table>
    
-
-
-
-
-
-
-
-
-
+    </p>
+</p-dialog>

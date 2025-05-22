@@ -4,13 +4,16 @@ import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
+  
 })
+
+
 export class ClienteService {
 
   readonly apiUrl = 'https://localhost:6026/api/cliente';
   
   usuarios: any[];
-  
+
 
   constructor(private http: HttpClient) {
     this.usuarios = [];

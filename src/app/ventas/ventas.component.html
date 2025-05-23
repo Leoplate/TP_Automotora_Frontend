@@ -87,7 +87,11 @@
     <div class="flex justify-end gap-2">
         <p-button label="Cancel" severity="secondary" (click)="visible = false" />
         <p-button label="Aceptar" (click)="crearVenta()" />
+        <div *ngIf="msgError" class="alert alert-danger">
+         {{ msgError }}
+        </div>
     </div>
+    
 </p-dialog>
 
 

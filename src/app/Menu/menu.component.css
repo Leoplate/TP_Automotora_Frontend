@@ -15,7 +15,7 @@
     text-align: center;
     color: white;
     background-color: rgb(1, 1, 26);
-    font-size: 25px
+    font-size: 40px
   }
   table {
     font-size: 14px;
@@ -37,4 +37,14 @@
     border-style: solid;
     border-color: black;
     align-items: center;
+  }
+
+  div {
+    display: flex;
+    justify-content: center;
+    gap: 10px;  
+  }
+
+  hr {
+    border-style: double;
   }

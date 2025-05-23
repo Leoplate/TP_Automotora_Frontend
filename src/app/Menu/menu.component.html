@@ -1,0 +1,32 @@
+
+
+
+
+<h1>Automotora:</h1>
+
+
+
+
+
+
+
+<div>
+   <p-button (click)="showCliente()" label="Clientes" [raised]="true" severity="help" />
+   <p-button (click)="showProducto()"label="Productos" [raised]="true" severity="help" />
+   <p-button (click)="showVenta()"label="Ventas" [raised]="true" severity="help" />
+   <p-button label="Posventas" [raised]="true" severity="help" />
+</div>
+
+<hr>
+<hr>
+<div *ngIf="isClienteVisible">
+  <app-clientes></app-clientes>
+</div>
+
+<div *ngIf="isProductoVisible">
+  <app-productos></app-productos>
+</div>
+
+<div *ngIf="isVentaVisible">
+  <app-ventas></app-ventas>
+</div>

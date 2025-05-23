@@ -16,6 +16,7 @@ import { VentaService } from '../service/venta.service';
   standalone: true,
 })
 export class ClientesComponent implements OnInit{
+    
    //clienteForm: FormGroup;
    //id: FormControl;
    
@@ -182,5 +183,7 @@ eliminarUsuario(usuarioHtml: any){
       });
          window.location.reload();
   }
+
+  
 
 }

@@ -46,6 +46,7 @@ export class VentasComponent implements OnInit{
    venta: any;
    nombreFiltro="";
    apellidoFiltro="";
+   msgError="";
    
   first = 0; 
   rows = 10; 
@@ -197,7 +198,7 @@ editarVenta(){
       }
       });
       
-         window.location.reload();
+         //window.location.reload();
          
   }
 
@@ -216,12 +217,15 @@ crearVenta(){
   this.ventaService.saveVentas(this.venta).subscribe({
     next: (data) => {
         this.todasLasVentas = data;
-      },
+        
+      },      
       error: (e) => {
-        console.log("Error al crear venta:", e);
+        this.msgError="No hay stock del producto";
+        alert("NO HAY STOCK DEL PRODUCTO!");
+        console.log("Error al crear venta:", this.msgError);
       }
   });
-  window.location.reload();
+  //window.location.reload();
 
 }
 

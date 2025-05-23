@@ -4,11 +4,12 @@ import { ClientesComponent } from '../clientes/clientes.component';
 import { VentasComponent } from './ventas/ventas.component';
 import { ProductosComponent } from './productos/productos.component';
 import { Form, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { MenuComponent } from './Menu/menu.component';
 
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet,ClientesComponent,ReactiveFormsModule,VentasComponent,ProductosComponent],
+  imports: [RouterOutlet,ClientesComponent,ReactiveFormsModule,VentasComponent,ProductosComponent,MenuComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
   

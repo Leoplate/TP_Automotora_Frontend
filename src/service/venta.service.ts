@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { error } from 'console';
 
 @Injectable({
   providedIn: 'root'
@@ -44,6 +45,7 @@ export class VentaService {
   editVentas(venta: any) {
     
     var ruta = this.apiUrl+venta.id;
+    
     return this.http.put<any>(ruta, venta);
   
   }

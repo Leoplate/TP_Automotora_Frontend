@@ -31,18 +31,21 @@ export class VentasComponent implements OnInit{
    todasLasVentas: any[];
    ventasFiltradas: any[];
    listadoVentas: any[];
+   listadoClientes: any[];
    foraneos: any[];
    productos: any[];
    visible: boolean = false;
    visibleDelete: boolean = false;
    visibleEditar: boolean = false;
    visibleListado: boolean = false;
+   visibleListadoCliente: boolean = false;
 
    id = 0;
    clienteId: string = "";
    vehiculoId: string = "";
    total: string = "";
-   fecha: string = "";
+   hoy: string = new Date().toISOString().slice(0, 10);
+   fecha: string = this.hoy;
    venta: any;
    nombreFiltro="";
    apellidoFiltro="";
@@ -64,6 +67,7 @@ export class VentasComponent implements OnInit{
      this.todasLasVentas = [];
      this.ventasFiltradas = [];
      this.listadoVentas = [];
+     this.listadoClientes = [];
      this.foraneos = [];
      this.productos = [];
      
@@ -72,6 +76,7 @@ export class VentasComponent implements OnInit{
    ngOnInit(): void {
      this.obtenerVentasInicial();
      this.obtenerVentasInicialListado();
+     this.obtenerVentasInicialListadoCliente();
      this.obtenerClientes();
      this.obtenerProducto();
    }
@@ -104,6 +109,21 @@ export class VentasComponent implements OnInit{
       }
     });
   }
+
+  obtenerVentasInicialListadoCliente() {
+    this.ventaService.getListadocliente().subscribe({
+      next: (data) => {
+        this.listadoClientes = data;
+        //this.ventas = data;
+        //this.ventasFiltradas = [...this.listadoVentas]; 
+        console.log(data);
+      },
+      error: (e) => {
+        console.log("Error al obtener clientes:", e);
+      }
+    });
+  }
+
 
 
   obtenerClientes() {
@@ -175,6 +195,7 @@ eliminarVentas(venta: any){
   let id = venta ;
   this.ventaService.deleteVentas(id).subscribe({});
   window.location.reload();
+  //this.showDialog();
   
 }
 
@@ -198,7 +219,8 @@ editarVenta(){
       }
       });
       
-         //window.location.reload();
+         window.location.reload();
+         //this.showDialog();
          
   }
 
@@ -225,7 +247,8 @@ crearVenta(){
         console.log("Error al crear venta:", this.msgError);
       }
   });
-  //window.location.reload();
+  window.location.reload();
+  //this.showDialog();
 
 }
 
@@ -250,6 +273,10 @@ abrirModalEditar(venta: any) {
     this.visibleListado = true;
   }
 
+  showDialogListadoCliente(){
+    this.visibleListadoCliente = true;
+    
+  }
 }
 
 

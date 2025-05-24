@@ -12,7 +12,7 @@ export class VentaService {
   readonly apiUrlvehiculo = 'https://localhost:6026/api/venta/vehiculo';
   readonly apiUrlCliente = 'https://localhost:6026/api/cliente';
   readonly apiUrlProducto = 'https://localhost:6026/api/producto';
-  
+  readonly apiUrlListCliente = 'https://localhost:6026/api/venta/cliente';
   
   
   usuarios: any[];
@@ -66,6 +66,11 @@ getListadoVehiculo() {
     return this.http.get<any[]>(ruta);
 }
 
+getListadocliente() {
+    var ruta = this.apiUrlListCliente;
+    console.log(ruta);
+    return this.http.get<any[]>(ruta);
+}
 
 }
 

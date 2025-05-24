@@ -7,11 +7,11 @@ import { DialogModule } from 'primeng/dialog';
 import { ClientesComponent } from '../../clientes/clientes.component';
 import { VentasComponent }  from '../ventas/ventas.component';
 import { ProductosComponent } from '../productos/productos.component';
- 
+import { PosventasComponent }  from '../posventas/posventas.component'; 
 
 @Component({
   selector: 'app-menu',
-  imports: [ReactiveFormsModule,FormsModule,TableModule,CommonModule,ButtonModule,ClientesComponent,ProductosComponent,VentasComponent],
+  imports: [ReactiveFormsModule,FormsModule,TableModule,CommonModule,ButtonModule,ClientesComponent,ProductosComponent,VentasComponent,PosventasComponent],
   templateUrl: './menu.component.html',
   styleUrl: './menu.component.css',
   standalone: true,
@@ -20,6 +20,7 @@ export class MenuComponent implements OnInit{
    isClienteVisible= false;
    isProductoVisible= false;
    isVentaVisible= false;
+   isPosventaVisible= false;
    //clienteForm: FormGroup;
    //id: FormControl;
    
@@ -121,18 +122,28 @@ showCliente() {
      this.isClienteVisible = !this.isClienteVisible;  
      this.isProductoVisible= false;
      this.isVentaVisible= false;
+     this.isPosventaVisible= false;
 }
 
 showProducto() {
      this.isProductoVisible = !this.isProductoVisible;  
      this.isClienteVisible= false;
      this.isVentaVisible= false;
+     this.isPosventaVisible= false;
 }
 
 showVenta() {
      this.isVentaVisible = !this.isVentaVisible;  
      this.isClienteVisible= false;
      this.isProductoVisible= false;
+     this.isPosventaVisible= false;
+}     
+
+showPosventa() {
+     this.isPosventaVisible = !this.isPosventaVisible;  
+     this.isClienteVisible= false;
+     this.isProductoVisible= false;
+     this.isVentaVisible= false;
 }     
   
 

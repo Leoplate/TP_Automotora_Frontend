@@ -69,6 +69,7 @@ export class ProductosComponent implements OnInit{
     this.productService.getProducts().subscribe({
       next: (data) => {
         this.todosLosProductos = data;
+        this.todosLosProductos.sort((a, b) => a.id - b.id);
         this.productos = data;
         this.productosFiltrados = [...this.todosLosProductos]; 
       },
@@ -109,11 +110,13 @@ crearProducto() {
   this.productService.saveProducts(this.producto).subscribe({
     next: (data) => {
         this.todosLosProductos = data;
+        this.ngOnInit();
       },
       error: (e) => {
         console.log("Error al crear productos:", e);
       }
   });
+  this.ngOnInit();
   window.location.reload();
 }
 
@@ -141,6 +144,7 @@ eliminarProducto(productoHtml: any){
   
   let id = productoHtml ;
   this.productService.deleteProducts(id).subscribe({});
+  this.ngOnInit();
   window.location.reload();
   
    }
@@ -170,12 +174,14 @@ eliminarProducto(productoHtml: any){
       this.productService.editProducts(this.producto).subscribe({
         next: (data) => {
         this.todosLosProductos = data;
+        this.ngOnInit();
       },
       error: (e) => {
         console.log("Error al modificar productos:", e);
       }
       });
          window.location.reload();
+         this.ngOnInit();
   }
 
 }

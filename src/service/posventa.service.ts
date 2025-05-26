@@ -42,7 +42,7 @@ export class PosventaService {
   }
 
   savePosventas(posventa: any) {
-    console.log(posventa)
+    
     return this.http.post<any>(this.apiUrl, posventa);
   
   }

@@ -14,7 +14,8 @@
     <!--p-button (click)="showDialogListado()" label="+ Vendidos" severity="info" /-->
 </p>
 
-
+<label for="idFiltro" class="font-semibold w-24">ID Posventa: </label>
+<input id="idFiltro" (input)="filtrarPosventas()" [(ngModel)]="idFiltro" pInputText placeholder="Buscar por ID">
 <label for="nome" class="font-semibold w-24">Nombre: </label>
 <input id="nome" (input)="filtrarPosventas()" [(ngModel)]="nombreFiltro" pInputText placeholder="Buscar por cliente">
 
@@ -61,7 +62,7 @@
         <label for="clienteId" class="font-semibold w-24">Cliente: </label>
         <!--input pInputText id="name" class="flex-auto" [(ngModel)]="clienteId" autocomplete="off" /-->
         <select [(ngModel)]="clienteId">
-        <option *ngFor="let posventa of foraneos" [value]="posventa.clienteId">
+        <option *ngFor="let posventa of foraneos" [value]="posventa.id">
              {{ posventa.id }}  {{"/" + posventa.apellido}}
         </option>
         </select>
@@ -76,7 +77,7 @@
         <label for="tipoId" class="font-semibold w-24">Tipo:</label>
         <!--input pInputText id="price" class="flex-auto" [(ngModel)]="vehiculoId" autocomplete="off" /-->
         <select [(ngModel)]="tipoid">
-        <option *ngFor="let posventa of tipos" [value]="posventa.tipoid">
+        <option *ngFor="let posventa of tipos" [value]="posventa.id">
              {{ posventa.id }}  {{"/" + posventa.descripcion}}
         </option>
         </select>
@@ -86,7 +87,7 @@
         <label for="estadoId" class="font-semibold w-24">Estado:</label>
         <!--input pInputText id="price" class="flex-auto" [(ngModel)]="vehiculoId" autocomplete="off" /-->
         <select [(ngModel)]="estadoid">
-        <option *ngFor="let posventa of estados" [value]="posventa.estadoid">
+        <option *ngFor="let posventa of estados" [value]="posventa.id">
              {{ posventa.id }}  {{"/" + posventa.descripcion}}
         </option>
         </select>
@@ -115,7 +116,7 @@
         <label for="clienteId" class="font-semibold w-24">Cliente: </label>
         <!--input pInputText id="clienteId" class="flex-auto" [(ngModel)]="clienteId" autocomplete="off" /-->
         <select [(ngModel)]="clienteId" >
-        <option *ngFor="let posventa of foraneos" [value]="posventa.clienteId">
+        <option *ngFor="let posventa of foraneos" [value]="posventa.id">
              {{ posventa.id }}  {{"/" + posventa.apellido}}
         </option>
         </select>
@@ -129,7 +130,7 @@
         <label for="tipoid" class="font-semibold w-24">Vehículo:</label>
         <!--input pInputText id="vehiculoId" class="flex-auto" [(ngModel)]="vehiculoId" autocomplete="off" /-->
         <select [(ngModel)]="tipoid" >
-        <option *ngFor="let posventa of tipos" [value]="posventa.tipoid">
+        <option *ngFor="let posventa of tipos" [value]="posventa.id">
              {{ posventa.id }}  {{"/" + posventa.descripcion}}
         </option>
         </select> 
@@ -138,7 +139,7 @@
         <label for="estadoid" class="font-semibold w-24">Vehículo:</label>
         <!--input pInputText id="vehiculoId" class="flex-auto" [(ngModel)]="vehiculoId" autocomplete="off" /-->
         <select [(ngModel)]="estadoid" >
-        <option *ngFor="let posventa of estados" [value]="posventa.estadoid">
+        <option *ngFor="let posventa of estados" [value]="posventa.id">
              {{ posventa.id }}  {{"/" + posventa.descripcion}}
         </option>
         </select> 

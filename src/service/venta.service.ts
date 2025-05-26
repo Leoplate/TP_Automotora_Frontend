@@ -53,7 +53,7 @@ export class VentaService {
   deleteVentas(id: any) {
     
     
-    var ruta = this.apiUrl+id;
+    var ruta = this.apiUrl+id.toString();
     
   console.log('URL de eliminación:', ruta); // Verifica la URL antes de la petición
   return this.http.delete<any>(ruta);

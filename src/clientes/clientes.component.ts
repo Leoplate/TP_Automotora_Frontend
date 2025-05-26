@@ -71,6 +71,7 @@ export class ClientesComponent implements OnInit{
     this.userService.getUsers().subscribe({
       next: (data) => {
         this.todosLosUsuarios = data;
+        this.todosLosUsuarios.sort((a, b) => a.id - b.id);
         this.usuarios = data;
         this.usuariosFiltrados = [...this.todosLosUsuarios]; 
       },
@@ -113,12 +114,14 @@ crearUsuario() {
   this.userService.saveUsers(this.usuario).subscribe({
     next: (data) => {
         this.todosLosUsuarios = data;
+        this.ngOnInit();
       },
       error: (e) => {
         console.log("Error al crear usuarios:", e);
       }
   });
   window.location.reload();
+  this.ngOnInit();
 }
 
 
@@ -145,6 +148,7 @@ eliminarUsuario(usuarioHtml: any){
   
   let id = usuarioHtml ;
   this.userService.deleteUsers(id).subscribe({});
+  this.ngOnInit();
   window.location.reload();
   
    }
@@ -176,12 +180,14 @@ eliminarUsuario(usuarioHtml: any){
       this.userService.editUsers(this.usuario).subscribe({
         next: (data) => {
         this.todosLosUsuarios = data;
+        this.ngOnInit();
       },
       error: (e) => {
         console.log("Error al modificar usuarios:", e);
       }
       });
          window.location.reload();
+         this.ngOnInit();
   }
 
   

@@ -50,6 +50,7 @@ export class PosventasComponent implements OnInit{
    posventa: any;
    nombreFiltro="";
    apellidoFiltro="";
+   idFiltro="";
    msgError="";
    
   first = 0; 
@@ -85,6 +86,7 @@ export class PosventasComponent implements OnInit{
     this.posventaService.getPosventas().subscribe({
       next: (data) => {
         this.todasLasPosventas = data;
+        this.todasLasPosventas.sort((a, b) => a.id - b.id);
         this.posventas = data;
         this.posventasFiltradas = [...this.todasLasPosventas]; 
         console.log(data);
@@ -140,13 +142,18 @@ export class PosventasComponent implements OnInit{
   
   
   filtrarPosventas() {
-  if (!this.nombreFiltro) {
+  if (!this.nombreFiltro && !this.idFiltro) {
     this.posventasFiltradas = [...this.todasLasPosventas]; 
   } else {
-    this.posventasFiltradas = this.todasLasPosventas.filter(posventas =>
-      posventas.clienteApellido.toLowerCase().includes(this.nombreFiltro.toLowerCase())
+    //this.posventasFiltradas = this.todasLasPosventas.filter(posventas =>
+    //  posventas.clienteApellido.toLowerCase().includes(this.nombreFiltro.toLowerCase())
       
-    );
+    let idString = this.idFiltro.toString();
+       
+    this.posventasFiltradas = this.todasLasPosventas.filter(posventas =>
+      posventas.clienteApellido.toLowerCase().includes(this.nombreFiltro.toLowerCase()) && posventas.id.toString().startsWith(idString))
+
+    //);
     console.log(this.posventasFiltradas);
   }
   }
@@ -180,31 +187,35 @@ eliminarPosventas(venta: any){
   
   let id = venta ;
   this.posventaService.deletePosventas(id).subscribe({});
+  this.ngOnInit();
   window.location.reload();
   
 }
 
 editarPosventa(){
      this.visibleEditar = false;
-  
-      this.posventa = {
-      id: this.id,  
+      //id:  
+      this.posventa = { 
+      id: this.id,
       clienteId: this.clienteId,
       fecha: this.fecha,
-      tipoid: this.tipoid,
-      estadoid: this.estadoid,
+      tipoid: parseInt(this.tipoid,10),
+      estadoid: parseInt(this.estadoid, 10),
       
      }
+     console.log(this.posventa);
     this.posventaService.editPosventas(this.posventa).subscribe({
         next: (data) => {
         this.todasLasPosventas = data;
+        this.todasLasPosventas.sort((a, b) => a.id - b.id);
+        //this.ngOnInit();
       },
       error: (e) => {
         console.log("Error al modificar posventa:", e);
       }
       });
-      
-         //window.location.reload();
+         this.ngOnInit();
+         window.location.reload();
          
   }
 
@@ -223,7 +234,8 @@ crearPosventa(){
   this.posventaService.savePosventas(this.posventa).subscribe({
     next: (data) => {
         this.todasLasPosventas = data;
-        
+        this.todasLasPosventas.sort((a, b) => a.id - b.id);
+        this.ngOnInit();
       },      
       error: (e) => {
         this.msgError="No hay stock del producto";
@@ -231,7 +243,8 @@ crearPosventa(){
         console.log("Error al crear posventa:", this.msgError);
       }
   });
-  //window.location.reload();
+  this.ngOnInit();
+  window.location.reload();
 
 }
 

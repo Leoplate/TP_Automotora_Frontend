@@ -49,6 +49,7 @@ export class VentasComponent implements OnInit{
    venta: any;
    nombreFiltro="";
    apellidoFiltro="";
+   idFiltro="";
    msgError="";
    
   first = 0; 
@@ -85,6 +86,7 @@ export class VentasComponent implements OnInit{
     this.ventaService.getVentas().subscribe({
       next: (data) => {
         this.todasLasVentas = data;
+        this.todasLasVentas.sort((a, b) => a.id - b.id);
         this.ventas = data;
         this.ventasFiltradas = [...this.todasLasVentas]; 
         console.log(data);
@@ -154,14 +156,18 @@ export class VentasComponent implements OnInit{
   
   
   filtrarVentas() {
-  if (!this.nombreFiltro) {
+  if (!this.nombreFiltro && !this.idFiltro) {
     this.ventasFiltradas = [...this.todasLasVentas]; 
   } else {
+    
+    
+       
+    let idString = this.idFiltro.toString();
+       
     this.ventasFiltradas = this.todasLasVentas.filter(ventas =>
-      ventas.clienteApellido.toLowerCase().includes(this.nombreFiltro.toLowerCase())
+      ventas.clienteApellido.toLowerCase().includes(this.nombreFiltro.toLowerCase()) && ventas.id.toString().startsWith(idString))
       
-    );
-    console.log(this.ventasFiltradas);
+    
   }
   }
   
@@ -170,12 +176,14 @@ export class VentasComponent implements OnInit{
   
 
 showDialog() {
+    this.limpiarPopUpCarga();
     this.visible = true;
   }
 
 
 hideDialog() {
     this.visible = false;
+    this.limpiarPopUpCarga();
   }  
 
 
@@ -191,43 +199,62 @@ eliminarVentas(venta: any){
       
      }
   
+       
   
-  let id = venta ;
-  this.ventaService.deleteVentas(id).subscribe({});
+  
+  this.ventaService.deleteVentas(venta.id).subscribe({
+        next: (data) => {
+        this.todasLasVentas = data;
+        this.ventasFiltradas = this.todasLasVentas;
+        this.ngOnInit();
+        
+      },
+      error: (e) => {
+        console.log("Error al eliminar venta:", e);
+      }
+      });
   window.location.reload();
   //this.showDialog();
+  //this.ngOnInit();
   
 }
 
 editarVenta(){
+     
      this.visibleEditar = false;
-  
+     
       this.venta = {
       id: this.id,  
       clienteId: this.clienteId,
       vehiculoId: this.vehiculoId,
       fecha: this.fecha,
-      total: this.total,
+      total: parseInt(this.total, 10),
       
      }
     this.ventaService.editVentas(this.venta).subscribe({
         next: (data) => {
         this.todasLasVentas = data;
+        this.ventasFiltradas = this.todasLasVentas;
+        //console.log(this.venta);
+        this.hideDialog();
+        this.ngOnInit();
       },
       error: (e) => {
-        console.log("Error al modificar venta:", e);
+        this.msgError="No hay stock del producto";
+        //console.log("Error al modificar venta:", e);
       }
       });
-      
-         window.location.reload();
-         //this.showDialog();
+         this.ngOnInit();
+         //window.location.reload();
+        
+         
          
   }
 
 
 crearVenta(){
-   this.visible = false;
-  
+  //this.limpiarPopUpCarga(); 
+  //this.hideDialog();
   this.venta = {
       id: this.id,  
       clienteId: this.clienteId,
@@ -238,19 +265,29 @@ crearVenta(){
      }
   this.ventaService.saveVentas(this.venta).subscribe({
     next: (data) => {
-        this.todasLasVentas = data;
         
+        this.todasLasVentas = data;
+        this.ventasFiltradas = this.todasLasVentas;
+        this.hideDialog();
+        this.ngOnInit();
       },      
       error: (e) => {
         this.msgError="No hay stock del producto";
+        this.hideDialog();
+        //this.msgError= e.error.msgError;
         alert("NO HAY STOCK DEL PRODUCTO!");
-        console.log("Error al crear venta:", this.msgError);
+        //console.log("Error al crear venta:", e.error.msgError );
       }
+
   });
-  window.location.reload();
-  //this.showDialog();
+  //this.ngOnInit();
+  //window.location.reload();
+  
+  
 
 }
+
+
 
 
 showDialogEdit(venta: any) {
@@ -277,6 +314,17 @@ abrirModalEditar(venta: any) {
     this.visibleListadoCliente = true;
     
   }
+
+  limpiarPopUpCarga(){
+    this.id = 0;
+   this.clienteId = "";
+   this.vehiculoId = "";
+   this.total = "";
+   this.hoy = new Date().toISOString().slice(0, 10);
+   this.fecha = this.hoy;
+   this.msgError = "";
+  }
+
 }
 
 

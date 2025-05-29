@@ -8,6 +8,7 @@ import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { PaginatorModule } from 'primeng/paginator';
+import { response } from 'express';
 
 @Component({
   selector: 'app-ventas',
@@ -148,7 +149,7 @@ export class VentasComponent implements OnInit{
         
       },
       error: (e) => {
-        console.log("Error al obtener usuarios:", e);
+        this.msgError=e.error;
       }
     });
   
@@ -188,6 +189,7 @@ hideDialog() {
 
 
 
+
 eliminarVentas(venta: any){
     this.visibleDelete = false;
     this.venta = {
@@ -220,31 +222,40 @@ eliminarVentas(venta: any){
 }
 
 editarVenta(){
-     
-     this.visibleEditar = false;
+      this.msgError=" ";
+     //this.visibleEditar = false;
      
       this.venta = {
       id: this.id,  
-      clienteId: this.clienteId,
-      vehiculoId: this.vehiculoId,
-      fecha: this.fecha,
-      total: parseInt(this.total, 10),
-      
+      ClienteId: this.clienteId,
+      VehiculoId: this.vehiculoId,
+      Fecha: this.fecha,
+      Total: this.total
      }
-    this.ventaService.editVentas(this.venta).subscribe({
-        next: (data) => {
-        this.todasLasVentas = data;
-        this.ventasFiltradas = this.todasLasVentas;
-        //console.log(this.venta);
-        this.hideDialog();
+
+     this.ventaService.editVentas(this.venta).subscribe({
+    next: (response) => {
+        console.log(response);
+        console.log(response.body);
+        //this.todasLasVentas = data;
+        //this.ventasFiltradas = this.todasLasVentas;
+        this.hideDialogModi();
         this.ngOnInit();
-      },
+      },      
       error: (e) => {
-        this.msgError="No hay stock del producto";
-        //console.log("Error al modificar venta:", e);
+        
+        this.msgError=e.error;
+        //this.hideDialog();
+        //this.msgError= e.error.msgError;
+       // alert("NO HAY STOCK DEL PRODUCTO!");
+        //console.log("Error al crear venta:", e.error.msgError );
+        
       }
-      });
-         this.ngOnInit();
+       
+    });
+       //this.limpiarPopUpCarga();
+
+        // this.ngOnInit();
          //window.location.reload();
         
          
@@ -255,31 +266,39 @@ editarVenta(){
 crearVenta(){
   //this.limpiarPopUpCarga(); 
   //this.hideDialog();
+//
   this.venta = {
-      id: this.id,  
-      clienteId: this.clienteId,
-      vehiculoId: this.vehiculoId,
-      fecha: this.fecha,
-      total: this.total,
+      Id: this.id,
+      ClienteId: parseInt(this.clienteId),
+      VehiculoId: parseInt(this.vehiculoId),
+      Fecha: this.fecha,
+      Total: parseInt(this.total),
       
      }
   this.ventaService.saveVentas(this.venta).subscribe({
-    next: (data) => {
-        
-        this.todasLasVentas = data;
-        this.ventasFiltradas = this.todasLasVentas;
+    next: (response) => {
+        console.log(response);
+        console.log(response.body);
+        //this.todasLasVentas = data;
+        //this.ventasFiltradas = this.todasLasVentas;
         this.hideDialog();
         this.ngOnInit();
       },      
       error: (e) => {
-        this.msgError="No hay stock del producto";
-        this.hideDialog();
-        //this.msgError= e.error.msgError;
-        alert("NO HAY STOCK DEL PRODUCTO!");
+        this.msgError=e.error;
+        if(e.error.status == 400){
+           this.msgError= "Datos erroneos";
+        }
+        //this.hideDialog();
+        
+       // alert("NO HAY STOCK DEL PRODUCTO!");
         //console.log("Error al crear venta:", e.error.msgError );
+        
       }
+      
 
   });
+  
   //this.ngOnInit();
   //window.location.reload();
   
@@ -325,6 +344,16 @@ abrirModalEditar(venta: any) {
    this.msgError = "";
   }
 
+
+  limpiarPopUpModi(){
+  this.msgError="";
+  //this.visibleEditar= false;
+  
+  }
+
+  hideDialogModi() {
+    this.visibleEditar = false;
+    this.limpiarPopUpModi();
+  }  
+
 }
-
-

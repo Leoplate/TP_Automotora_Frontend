@@ -27,14 +27,14 @@ export class ClienteService {
 
   saveUsers(usuario: any) {
     console.log(usuario)
-    return this.http.post<any>(this.apiUrl, usuario);
+    return this.http.post<any>(this.apiUrl, usuario, {observe: 'response' });
   
   }
 
   editUsers(usuario: any) {
     
     var ruta = this.apiUrl+"/"+usuario.id;
-    return this.http.put<any>(ruta, usuario);
+    return this.http.put<any>(ruta, usuario, {observe: 'response' });
   
   }
 

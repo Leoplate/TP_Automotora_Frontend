@@ -42,4 +42,9 @@
   #error {
   font-weight: bold; 
   text-align: center; 
-  }  
+  }
+  
+  #errorEdit {
+  font-weight: bold; 
+  text-align: center; 
+  } 

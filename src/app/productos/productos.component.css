@@ -38,3 +38,13 @@
     border-color: black;
     align-items: center;
   }
+ 
+  #errorProd1 {
+  font-weight: bold; 
+  text-align: center; 
+  } 
+
+  #errorProd2 {
+  font-weight: bold; 
+  text-align: center; 
+  } 

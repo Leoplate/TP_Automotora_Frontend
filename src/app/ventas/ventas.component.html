@@ -65,7 +65,7 @@
         <!--input pInputText id="name" class="flex-auto" [(ngModel)]="clienteId" autocomplete="off" /-->
         <select [(ngModel)]="clienteId">
         <option *ngFor="let venta of foraneos" [value]="venta.id">
-             {{ venta.id }}  {{"/" + venta.apellido}}
+             {{ venta.id }}  {{"/" + venta.nombre}}  {{ venta.apellido}}
         </option>
         </select>
     
@@ -75,7 +75,7 @@
         <!--input pInputText id="price" class="flex-auto" [(ngModel)]="vehiculoId" autocomplete="off" /-->
         <select [(ngModel)]="vehiculoId">
         <option *ngFor="let venta of productos" [value]="venta.id">
-             {{ venta.id }}  {{"/" + venta.nombre}}
+             {{ venta.id }}  {{"/" + venta.nombre}} 
         </option>
         </select>
     </div>
@@ -101,7 +101,7 @@
 <p-dialog header="Editar Venta" [modal]="true" [(visible)]="visibleEditar" [style]="{ width: '25rem' }">
     <span class="p-text-secondary block mb-8"></span>
     <div>
-        <label for="ventaId" class="font-semibold w-24">ID: </label>
+        <!--label for="ventaId" class="font-semibold w-24">ID: </label-->
         <input pInputText id="ventaId" class="flex-auto" [(ngModel)]="id" readonly style="border: none; outline: none;" />
     <p></p>
     </div>
@@ -111,7 +111,7 @@
         <!--input pInputText id="clienteId" class="flex-auto" [(ngModel)]="clienteId" autocomplete="off" /-->
         <select [(ngModel)]="clienteId" >
         <option *ngFor="let venta of foraneos" [value]="venta.id">
-             {{ venta.id }}  {{"/" + venta.apellido}}
+             {{ venta.id }} {{ "/" + venta.nombre }} {{ venta.apellido }}
         </option>
         </select>
     </div>
@@ -134,11 +134,15 @@
     <div class="flex items-center gap-4 mb-4">
         <label for="total" class="font-semibold w-24">Total:</label>
         <input pInputText id="total" class="flex-auto" [(ngModel)]="total" autocomplete="off" />
+        <!--input pInputText id="total" class="flex-auto" [(ngModel)]="productos.stock" autocomplete="off" /-->
     </div>
     
     <div class="flex justify-end gap-2">
-        <p-button label="Cancel" severity="secondary" (click)="visibleEditar = false" />
+        <p-button label="Cancel" severity="secondary" (click)="limpiarPopUpModi()" />
         <p-button label="Aceptar" (click)="editarVenta()" />
+        <div id="errorEdit" *ngIf="msgError" class="alert alert-danger">
+         {{ msgError }}
+        </div> 
     </div>
     
     

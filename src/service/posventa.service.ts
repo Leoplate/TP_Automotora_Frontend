@@ -43,7 +43,7 @@ export class PosventaService {
 
   savePosventas(posventa: any) {
     
-    return this.http.post<any>(this.apiUrl, posventa);
+    return this.http.post<any>(this.apiUrl, posventa, {observe: 'response' });
   
   }
 
@@ -51,7 +51,7 @@ export class PosventaService {
     
     var ruta = this.apiUrl+posventa.id;
     
-    return this.http.put<any>(ruta, posventa);
+    return this.http.put<any>(ruta, posventa, {observe: 'response' });
   
   }
 

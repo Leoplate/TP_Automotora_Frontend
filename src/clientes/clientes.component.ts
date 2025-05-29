@@ -41,7 +41,7 @@ export class ClientesComponent implements OnInit{
    usuario: any;
    nombreFiltro="";
    apellidoFiltro="";
-   
+   msgError= "";
    
   
   first = 0; 
@@ -112,12 +112,16 @@ crearUsuario() {
   email: this.modalEmail
   };
   this.userService.saveUsers(this.usuario).subscribe({
-    next: (data) => {
-        this.todosLosUsuarios = data;
+    next: (response) => {
+        //this.todosLosUsuarios = response.body;
         this.ngOnInit();
       },
       error: (e) => {
-        console.log("Error al crear usuarios:", e);
+        if(e.error.status == 400){
+           this.msgError= "Datos erroneos";
+        }
+       
+        
       }
   });
   window.location.reload();
@@ -178,8 +182,8 @@ eliminarUsuario(usuarioHtml: any){
       
 
       this.userService.editUsers(this.usuario).subscribe({
-        next: (data) => {
-        this.todosLosUsuarios = data;
+        next: (response) => {
+        this.todosLosUsuarios = response.body;
         this.ngOnInit();
       },
       error: (e) => {

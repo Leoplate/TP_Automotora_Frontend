@@ -39,7 +39,7 @@ export class ProductosComponent implements OnInit{
    producto: any;
    nombreFiltro="";
    apellidoFiltro="";
-   
+   msgError="";
    
   
   first = 0; 
@@ -108,16 +108,20 @@ crearProducto() {
   stock: this.stock,
   };
   this.productService.saveProducts(this.producto).subscribe({
-    next: (data) => {
-        this.todosLosProductos = data;
+    next: (response) => {
+        this.todosLosProductos = response.body;
         this.ngOnInit();
       },
       error: (e) => {
-        console.log("Error al crear productos:", e);
+        if(e.error.status == 400){
+          this.msgError= "Datos erroneos";
+        }
+        
+        
       }
   });
   this.ngOnInit();
-  window.location.reload();
+  //window.location.reload();
 }
 
 
@@ -172,15 +176,17 @@ eliminarProducto(productoHtml: any){
       
 
       this.productService.editProducts(this.producto).subscribe({
-        next: (data) => {
-        this.todosLosProductos = data;
+        next: (response) => {
+        this.todosLosProductos = response.body;
         this.ngOnInit();
       },
       error: (e) => {
-        console.log("Error al modificar productos:", e);
+        if(e.error.status == 400){
+          this.msgError= "Datos erroneos";
+        }  
       }
       });
-         window.location.reload();
+         //window.location.reload();
          this.ngOnInit();
   }
 

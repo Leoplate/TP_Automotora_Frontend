@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { error } from 'console';
+import { response } from 'express';
 
 @Injectable({
   providedIn: 'root'
@@ -37,16 +38,17 @@ export class VentaService {
   }
 
   saveVentas(venta: any) {
-    console.log(venta)
-    return this.http.post<any>(this.apiUrl, venta);
-  
+    //console.log(venta)
+    return this.http.post<any>(this.apiUrl, venta, {observe: 'response' });
+     //return this.http.post<any[]>(this.apiUrl, venta);
   }
 
   editVentas(venta: any) {
     
-    var ruta = this.apiUrl+venta.id;
     
-    return this.http.put<any>(ruta, venta);
+    var ruta = this.apiUrl+venta.id;
+    console.log(ruta);
+    return this.http.put<any>(ruta, venta, {observe: 'response' } );
   
   }
 

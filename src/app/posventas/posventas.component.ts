@@ -167,9 +167,7 @@ showDialog() {
   }
 
 
-hideDialog() {
-    this.visible = false;
-  }  
+ 
 
 
 
@@ -193,7 +191,8 @@ eliminarPosventas(venta: any){
 }
 
 editarPosventa(){
-     this.visibleEditar = false;
+     this.limpiarPopUpModi();
+     //this.visibleEditar = false;
       //id:  
       this.posventa = { 
       id: this.id,
@@ -205,24 +204,29 @@ editarPosventa(){
      }
      console.log(this.posventa);
     this.posventaService.editPosventas(this.posventa).subscribe({
-        next: (data) => {
-        this.todasLasPosventas = data;
+        next: (response) => {
+        this.todasLasPosventas = response.body;
         this.todasLasPosventas.sort((a, b) => a.id - b.id);
-        //this.ngOnInit();
+        this.hideDialogModi();
+        this.ngOnInit();
       },
       error: (e) => {
-        console.log("Error al modificar posventa:", e);
+        this.msgError=e.error;
+        if(e.error.status == 400){
+           this.msgError= "Datos erroneos";
+        }
+        
       }
       });
          this.ngOnInit();
-         window.location.reload();
+         //window.location.reload();
          
   }
 
 
 crearPosventa(){
-   this.visible = false;
-  
+   //this.visible = false;
+  this.msgError="";
   this.posventa = {
       id: this.id,  
       clienteId: this.clienteId,
@@ -232,19 +236,24 @@ crearPosventa(){
       
      }
   this.posventaService.savePosventas(this.posventa).subscribe({
-    next: (data) => {
-        this.todasLasPosventas = data;
-        this.todasLasPosventas.sort((a, b) => a.id - b.id);
+    next: (response) => {
+        //this.todasLasPosventas = response.body;
+        //this.todasLasPosventas.sort((a, b) => a.id - b.id);
+        this.hideDialog();
         this.ngOnInit();
       },      
       error: (e) => {
-        this.msgError="No hay stock del producto";
-        alert("NO HAY STOCK DEL PRODUCTO!");
-        console.log("Error al crear posventa:", this.msgError);
+        this.msgError=e.error;
+        if(e.error.status == 400){
+           this.msgError= "Datos erroneos";
+        }
+        //alert("NO HAY STOCK DEL PRODUCTO!");
+        //console.log("Error al crear posventa:", this.msgError);
       }
   });
+  this.limpiarPopUpCarga();
   this.ngOnInit();
-  window.location.reload();
+  //window.location.reload();
 
 }
 
@@ -268,6 +277,32 @@ abrirModalEditar(posventa: any) {
   showDialogListado(){
     this.visibleListado = true;
   }
+
+  limpiarPopUpCarga(){
+    this.id = 0;
+   this.clienteId = "";
+   this.tipoid = "";
+   this.estadoid="";
+   this.hoy = new Date().toISOString().slice(0, 10);
+   this.fecha = this.hoy;
+   this.msgError = "";
+  }
+
+  limpiarPopUpModi(){
+  this.msgError="";
+  //this.visibleEditar= false;
+  
+  }
+
+  hideDialogModi() {
+    this.visibleEditar = false;
+    this.limpiarPopUpModi();
+  }  
+
+  hideDialog() {
+    this.visible = false;
+    this.limpiarPopUpCarga();
+  }  
 
 }
 

@@ -66,6 +66,9 @@
     <div class="flex justify-end gap-2">
         <p-button label="Cancel" severity="secondary" (click)="visible = false" />
         <p-button label="Aceptar" (click)="crearProducto()" />
+        <div id="errorProd1" *ngIf="msgError" class="alert alert-danger">
+         {{ msgError }}
+        </div>
     </div>
 </p-dialog>
 
@@ -88,6 +91,9 @@
     <div class="flex justify-end gap-2">
         <p-button label="Cancel" severity="secondary" (click)="visibleEditar = false" />
         <p-button label="Aceptar" (click)="editarProducto()" />
+        <div id="errorProd2" *ngIf="msgError" class="alert alert-danger">
+         {{ msgError }}
+        </div>
     </div>
 </p-dialog>
 

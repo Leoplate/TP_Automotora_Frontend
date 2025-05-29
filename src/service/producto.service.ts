@@ -24,14 +24,14 @@ export class ProductoService {
 
   saveProducts(producto: any) {
     console.log(producto)
-    return this.http.post<any>(this.apiUrl, producto);
+    return this.http.post<any>(this.apiUrl, producto, {observe: 'response' });
   
   }
 
   editProducts(producto: any) {
     
     var ruta = this.apiUrl+"/"+producto.id;
-    return this.http.put<any>(ruta, producto);
+    return this.http.put<any>(ruta, producto, {observe: 'response' });
   
   }
 

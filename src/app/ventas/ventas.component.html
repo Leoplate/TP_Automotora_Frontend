@@ -81,11 +81,11 @@
     </div>
     <div class="flex items-center gap-4 mb-4">
         <label for="fecha" class="font-semibold w-24">Fecha:</label>
-        <input pInputText id="stock" class="flex-auto" [(ngModel)]="fecha" autocomplete="off" />
+        <input pInputText id="fecha" class="flex-auto" [(ngModel)]="fecha" autocomplete="off" />
     </div>
     <div class="flex items-center gap-4 mb-4">
         <label for="total" class="font-semibold w-24">Total:</label>
-        <input pInputText id="stock" class="flex-auto" [(ngModel)]="total" autocomplete="off" />
+        <input pInputText id="total" class="flex-auto" [(ngModel)]="total" autocomplete="off" />
     </div>
     <div class="flex justify-end gap-2">
         <p-button label="Cancel" (click)="limpiarPopUpCarga()" severity="secondary" (click)="visible = false" />
@@ -135,6 +135,10 @@
         <label for="total" class="font-semibold w-24">Total:</label>
         <input pInputText id="total" class="flex-auto" [(ngModel)]="total" autocomplete="off" />
         <!--input pInputText id="total" class="flex-auto" [(ngModel)]="productos.stock" autocomplete="off" /-->
+    </div>
+    <div>
+        <label for="stock" class="font-semibold w-24">Stock:</label>
+        <input pInputText id="stock" class="flex-auto" [(ngModel)]="stock" readonly style="border: none; outline: none;" />
     </div>
     
     <div class="flex justify-end gap-2">

@@ -251,7 +251,7 @@ crearPosventa(){
         //console.log("Error al crear posventa:", this.msgError);
       }
   });
-  this.limpiarPopUpCarga();
+  //this.limpiarPopUpCarga();
   this.ngOnInit();
   //window.location.reload();
 

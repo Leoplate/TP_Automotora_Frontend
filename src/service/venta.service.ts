@@ -37,6 +37,12 @@ export class VentaService {
     return this.http.get<any[]>(this.apiUrlProducto);
   }
 
+  getStock(venta: any) {
+    //console.log(venta)
+    return this.http.post<any>(this.apiUrlProducto+"/Stock", venta, {observe: 'response' });
+     //return this.http.post<any[]>(this.apiUrl, venta);
+  }
+
   saveVentas(venta: any) {
     //console.log(venta)
     return this.http.post<any>(this.apiUrl, venta, {observe: 'response' });

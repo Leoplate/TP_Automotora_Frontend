@@ -96,11 +96,12 @@ export class ProductosComponent implements OnInit{
 
 showDialog() {
     this.visible = true;
+    this.msgError="";
   }
 
    
 crearProducto() {
-  this.visible = false;
+  //this.visible = false;
   
   this.producto = {
   nombre: this.name,
@@ -127,12 +128,14 @@ crearProducto() {
 
 showDialogDelete() {
     this.visibleDelete = true;
+    this.msgError="";
   }
 
 
 showDialogEdit(producto: any) {
     this.abrirModalEditar(producto);
     this.visibleEditar = true;
+    this.msgError="";
   }
 
 

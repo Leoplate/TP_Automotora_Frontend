@@ -72,8 +72,11 @@
         <input pInputText id="modalEmail" class="flex-auto" [(ngModel)]="modalEmail"autocomplete="off" />
     </div>
     <div class="flex justify-end gap-2">
-        <p-button label="Cancel" severity="secondary" (click)="visible = false" />
+        <p-button label="Cancel" severity="secondary" (click)="hideDialog()" />
         <p-button label="Aceptar" (click)="crearUsuario()" />
+        <div id="error" *ngIf="msgError" class="alert alert-danger">
+         {{ msgError }}
+        </div>
     </div>
 </p-dialog>
 
@@ -99,6 +102,9 @@
     <div class="flex justify-end gap-2">
         <p-button label="Cancel" severity="secondary" (click)="visibleEditar = false" />
         <p-button label="Aceptar" (click)="editarUsuario()" />
+        <div id="errorModi" *ngIf="msgError" class="alert alert-danger">
+         {{ msgError }}
+        </div>
     </div>
 </p-dialog>
 

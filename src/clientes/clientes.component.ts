@@ -99,12 +99,17 @@ export class ClientesComponent implements OnInit{
 
 showDialog() {
     this.visible = true;
+    this.msgError="";
   }
 
+
+ hideDialog() {
+    this.visible = false;
+  } 
    
 crearUsuario() {
-  this.visible = false;
-  
+  //this.visible = false;
+  //this.msgError="";
   this.usuario = {
   nombre: this.username,
   apellido: this.surname,
@@ -115,6 +120,7 @@ crearUsuario() {
     next: (response) => {
         //this.todosLosUsuarios = response.body;
         this.ngOnInit();
+        this.hideDialog();
       },
       error: (e) => {
         if(e.error.status == 400){
@@ -124,19 +130,21 @@ crearUsuario() {
         
       }
   });
-  window.location.reload();
+  //window.location.reload();
   this.ngOnInit();
 }
 
 
 showDialogDelete() {
     this.visibleDelete = true;
+    this.msgError="";
   }
 
 
 showDialogEdit(usuario: any) {
     this.abrirModalEditar(usuario);
     this.visibleEditar = true;
+    this.msgError="";
   }
 
 
@@ -153,7 +161,7 @@ eliminarUsuario(usuarioHtml: any){
   let id = usuarioHtml ;
   this.userService.deleteUsers(id).subscribe({});
   this.ngOnInit();
-  window.location.reload();
+  //window.location.reload();
   
    }
 
@@ -187,10 +195,12 @@ eliminarUsuario(usuarioHtml: any){
         this.ngOnInit();
       },
       error: (e) => {
-        console.log("Error al modificar usuarios:", e);
+        if(e.error.status == 400){
+           this.msgError= "Datos erroneos";
+        }
       }
       });
-         window.location.reload();
+         //window.location.reload();
          this.ngOnInit();
   }
 

@@ -52,6 +52,7 @@ export class VentasComponent implements OnInit{
    apellidoFiltro="";
    idFiltro="";
    msgError="";
+   stock: string = "";
    
   first = 0; 
   rows = 10; 
@@ -263,6 +264,44 @@ editarVenta(){
   }
 
 
+obtenerStock(){
+      this.msgError=" ";
+     //this.visibleEditar = false;
+     
+      this.venta = {
+      id: this.id,  
+      ClienteId: this.clienteId,
+      VehiculoId: this.vehiculoId,
+      Fecha: this.fecha,
+      Total: this.total
+     }
+
+     this.ventaService.getStock(this.venta).subscribe({
+    next: (response) => {
+        console.log(response);
+        console.log(response.body);
+        this.stock=response.body;
+        //this.todasLasVentas = data;
+        //this.ventasFiltradas = this.todasLasVentas;
+        //this.hideDialogModi();
+        this.ngOnInit();
+      },      
+      error: (e) => {
+        
+        this.msgError=e.error;
+        //this.hideDialog();
+        //this.msgError= e.error.msgError;
+       // alert("NO HAY STOCK DEL PRODUCTO!");
+        //console.log("Error al crear venta:", e.error.msgError );
+        
+      }
+       
+    });
+            
+         
+  }
+
+
 crearVenta(){
   //this.limpiarPopUpCarga(); 
   //this.hideDialog();
@@ -286,8 +325,9 @@ crearVenta(){
       },      
       error: (e) => {
         this.msgError=e.error;
-        if(e.error.status == 400){
-           this.msgError= "Datos erroneos";
+        if(e.error.status === 400){
+           this.msgError= "Datos incorrectos";
+           console.error(e.error.errors);
         }
         //this.hideDialog();
         
@@ -311,7 +351,9 @@ crearVenta(){
 
 showDialogEdit(venta: any) {
     this.abrirModalEditar(venta);
+    this.obtenerStock();
     this.visibleEditar = true;
+    
   }
 
 
@@ -347,7 +389,7 @@ abrirModalEditar(venta: any) {
 
   limpiarPopUpModi(){
   this.msgError="";
-  //this.visibleEditar= false;
+  this.visibleEditar= false;
   
   }
 

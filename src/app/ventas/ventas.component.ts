@@ -33,6 +33,7 @@ export class VentasComponent implements OnInit{
    ventasFiltradas: any[];
    listadoVentas: any[];
    listadoClientes: any[];
+   listadoAnios: any[];
    foraneos: any[];
    productos: any[];
    visible: boolean = false;
@@ -40,6 +41,7 @@ export class VentasComponent implements OnInit{
    visibleEditar: boolean = false;
    visibleListado: boolean = false;
    visibleListadoCliente: boolean = false;
+   visibleListadoAnio: boolean = false;
 
    id = 0;
    clienteId: string = "";
@@ -71,6 +73,7 @@ export class VentasComponent implements OnInit{
      this.ventasFiltradas = [];
      this.listadoVentas = [];
      this.listadoClientes = [];
+     this.listadoAnios = [];
      this.foraneos = [];
      this.productos = [];
      
@@ -80,8 +83,10 @@ export class VentasComponent implements OnInit{
      this.obtenerVentasInicial();
      this.obtenerVentasInicialListado();
      this.obtenerVentasInicialListadoCliente();
+     this.obtenerAnio();
      this.obtenerClientes();
      this.obtenerProducto();
+     
    }
 
   obtenerVentasInicial() {
@@ -147,6 +152,20 @@ export class VentasComponent implements OnInit{
     this.ventaService.getProducto().subscribe({
       next: (data) => {
         this.productos = data;
+        
+      },
+      error: (e) => {
+        this.msgError=e.error;
+      }
+    });
+  
+  }
+
+
+  obtenerAnio() {
+    this.ventaService.getListadoAnio().subscribe({
+      next: (data) => {
+        this.listadoAnios = data;
         
       },
       error: (e) => {
@@ -373,6 +392,11 @@ abrirModalEditar(venta: any) {
 
   showDialogListadoCliente(){
     this.visibleListadoCliente = true;
+    
+  }
+
+  showDialogListadoAnio(){
+    this.visibleListadoAnio = true;
     
   }
 

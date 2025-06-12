@@ -14,6 +14,7 @@ export class VentaService {
   readonly apiUrlCliente = 'https://localhost:6026/api/cliente';
   readonly apiUrlProducto = 'https://localhost:6026/api/producto';
   readonly apiUrlListCliente = 'https://localhost:6026/api/venta/cliente';
+  readonly apiUrlListAnio = 'https://localhost:6026/api/venta/anual';
   
   
   usuarios: any[];
@@ -76,6 +77,12 @@ getListadoVehiculo() {
 
 getListadocliente() {
     var ruta = this.apiUrlListCliente;
+    console.log(ruta);
+    return this.http.get<any[]>(ruta);
+}
+
+getListadoAnio() {
+    var ruta = this.apiUrlListAnio;
     console.log(ruta);
     return this.http.get<any[]>(ruta);
 }
